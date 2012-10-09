@@ -21,7 +21,7 @@
       "url": "https://github.com/bytespider/resized/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "lib/resized",
+  "main": "index",
   "engines": {
     "node": ">= 0.6.0"
   },
