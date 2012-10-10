@@ -13,47 +13,42 @@ var child_process = require('child_process');
 function Resized(options) {
     Stream.call(this);
 
-    this.readable = true;
-    this.writable = true;
+    var djpeg = child_process.spawn('djpeg', ['-scale', '1/8']);
+    var cjpeg = child_process.spawn('cjpeg', []);
+    djpeg.stdout.pipe(cjpeg.stdin);
 
-    this.djpeg = child_process.spawn('djpeg', ['-dct', 'int', '-scale', '1/4']);
-    this.cjpeg = child_process.spawn('cjpeg', ['-quality', '90', '-sample', '1x1']);
+    var stream = this;
 
-    this.djpeg.stdout.pipe(this.cjpeg.stdin);
+    this.pause = function () {
+        cjpeg.stdout.pause();
+    };
 
-    var self = this;
+    this.write = function (data) {
+        return djpeg.stdin.write(data);
+    };
 
-    this.djpeg.stdin.on('drain', function () {
-        self.emit('drain');
+    this.resume = function () {
+        cjpeg.stdout.resume();  
+    };
+
+    this.end = function () {
+        djpeg.stdin.end();
+    };
+
+    djpeg.stdin.on('end', function (data) {
+        if (data) {
+            stream.write(data);
+        }
+
+        djpeg.stdin.end();
     });
 
-    this.djpeg.stdin.on('error', function (error) {
-        self.emit('error', error);
+    djpeg.stdin.on('drain', function () {
+        stream.emit('drain');
     });
 
-    this.djpeg.stdin.on('close', function () {
-        self.emit('close');
-    });
-
-    this.djpeg.stdin.on('pipe', function (src) {
-        self.emit('pipe', src);
-    });
-
-    this.cjpeg.stdout.on('data', function (data) {
-        console.log('cjpeg got data for you');
-        self.emit('data', data);
-    });
-
-    this.cjpeg.stdout.on('error', function (error) {
-        self.emit('error', error);
-    });
-
-    this.cjpeg.stdout.on('end', function () {
-        self.emit('end');
-    });
-
-    this.cjpeg.stdout.on('close', function () {
-        self.emit('close');
+    cjpeg.stdout.on('data', function (data) {
+        stream.emit('data', data);
     });
 
 
@@ -62,36 +57,7 @@ function Resized(options) {
 
 util.inherits(Resized, Stream);
 
-Resized.prototype.write = function (data) {
-    //this.emit('data', data);
-    console.log('writing');
-    return this.djpeg.stdin.write(data);
-};
-
-Resized.prototype.end = function (data) {
-    if (data) {
-        this.write(data);
-    }
-
-    console.log('ending');
-    return this.djpeg.stdin.end();
-};
-
-Resized.prototype.pause = function () {
-    console.log('pausing');
-    return this.djpeg.stdin.pause();
-};
-
-Resized.prototype.destroy = function () {
-    console.log('destroying');
-    
-    this.readable = false;
-    this.writable = false;
-    return this.djpeg.stdin.close();
-};
-
-Resized.prototype.resume = function () {
-
-};
+Resized.prototype.readable = true;
+Resized.prototype.writable = true;
 
 exports.Resized = Resized;
