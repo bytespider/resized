@@ -1,7 +1,7 @@
 {
   "name": "resized",
   "description": "fast image resize library",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/bytespider/resized",
   "author": {
     "name": "Rob Griffiths",
@@ -31,5 +31,5 @@
   "devDependencies": {
     "grunt": "~0.3.16"
   },
-  "keywords": []
+  "keywords": ["image", "manipulation", "resize", "crop"]
 }
