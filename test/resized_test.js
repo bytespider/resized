@@ -21,11 +21,12 @@ var resized = require('../lib');
     test.ifError(value)
 */
 
+var original_filename = 'test/original.jpg';
+
 exports.describe = function (test) {
     test.expect(3);
 
-    var filename = 'original.jpg';
-    var r = resized.describe(filename, function (err, properties) {
+    var r = resized.describe(original_filename, function (err, properties) {
         test.ifError(err);
 
         test.equal(properties.resolution.width, 1280, 'Width is 1280px');
@@ -39,7 +40,7 @@ exports['Resizing'] = {
         test.expect(2);
 
         var filename = 'resized.jpg';
-        resized('original.jpg').resize({width: 400}).write(filename, function () {
+        resized(original_filename).resize({width: 400}).write(filename, function () {
             resized.describe(filename, function (err, properties) {
                 test.ifError(err);
 
@@ -53,7 +54,7 @@ exports['Resizing'] = {
         test.expect(2);
 
         var filename = 'resized.jpg';
-        resized('original.jpg').resize({height: 400}).write(filename, function () {
+        resized(original_filename).resize({height: 400}).write(filename, function () {
             resized.describe(filename, function (err, properties) {
                 test.ifError(err);
 
@@ -67,7 +68,7 @@ exports['Resizing'] = {
         test.expect(3);
 
         var filename = 'resized.jpg';
-        resized('original.jpg').resize({width: 1000, height: 400}).write(filename, function () {
+        resized(original_filename).resize({width: 1000, height: 400}).write(filename, function () {
             resized.describe(filename, function (err, properties) {
                 test.ifError(err);
 
@@ -82,7 +83,7 @@ exports['Resizing'] = {
         test.expect(3);
 
         var filename = 'resized.jpg';
-        resized('original.jpg').resize({width: 1000, height: 400, aspect: false}).write(filename, function () {
+        resized(original_filename).resize({width: 1000, height: 400, aspect: false}).write(filename, function () {
             resized.describe(filename, function (err, properties) {
                 test.ifError(err);
 
@@ -97,7 +98,7 @@ exports['Resizing'] = {
         test.expect(3);
 
         var filename = 'resized.jpg';
-        resized('original.jpg').resize({width: 1000, height: 400, fill: true}).write(filename, function () {
+        resized(original_filename).resize({width: 1000, height: 400, fill: true}).write(filename, function () {
             resized.describe(filename, function (err, properties) {
                 test.ifError(err);
 
@@ -114,7 +115,7 @@ exports['Cropping'] = {
         test.expect(3);
 
         var filename = 'resized.jpg';
-        resized('original.jpg').crop({width: 50}).write(filename, function () {
+        resized(original_filename).crop({width: 50}).write(filename, function () {
             resized.describe(filename, function (err, properties) {
                 test.ifError(err);
 
@@ -129,7 +130,7 @@ exports['Cropping'] = {
         test.expect(3);
 
         var filename = 'resized.jpg';
-        resized('original.jpg').crop({height: 50}).write(filename, function () {
+        resized(original_filename).crop({height: 50}).write(filename, function () {
             resized.describe(filename, function (err, properties) {
                 test.ifError(err);
 
@@ -144,7 +145,7 @@ exports['Cropping'] = {
         test.expect(3);
 
         var filename = 'resized.jpg';
-        resized('original.jpg').crop({width: 50, height: 50}).write(filename, function () {
+        resized(original_filename).crop({width: 50, height: 50}).write(filename, function () {
             resized.describe(filename, function (err, properties) {
                 test.ifError(err);
 
@@ -159,7 +160,7 @@ exports['Cropping'] = {
         test.expect(3);
 
         var filename = 'resized.jpg';
-        resized('original.jpg').crop({width: 50, height: 50}).write(filename, function () {
+        resized(original_filename).crop({width: 50, height: 50}).write(filename, function () {
             resized.describe(filename, function (err, properties) {
                 test.ifError(err);
 
@@ -174,7 +175,7 @@ exports['Cropping'] = {
         test.expect(3);
 
         var filename = 'resized.jpg';
-        resized('original.jpg').crop({top: 50, right: 50, bottom: 50, left: 50}).write(filename, function () {
+        resized(original_filename).crop({top: 50, right: 50, bottom: 50, left: 50}).write(filename, function () {
             resized.describe(filename, function (err, properties) {
                 test.ifError(err);
 
