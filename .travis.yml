@@ -2,3 +2,7 @@ language: node_js
 node_js:
   - 0.6
   - 0.8
+before_install:
+ - sudo apt-get update -qq libjpeg-progs netpbm
+before_script:
+  - wget http://f.cl.ly/items/270d1k0s1b0X3Q181i1g/original.jpg
