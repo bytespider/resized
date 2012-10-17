@@ -21,7 +21,7 @@ var resized = require('../lib');
     test.ifError(value)
 */
 
-var original_filename = 'test/original.jpg';
+var original_filename = './test/original.jpg';
 
 exports.describe = function (test) {
     test.expect(3);
