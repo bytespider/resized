@@ -7,11 +7,26 @@ Install the module with: `npm install resized`
 
 ```javascript
 var resized = require('resized');
-resized.awesome(); // "awesome"
 ```
 
 ## Documentation
-_(Coming soon)_
+You'll need the following command line dependencies.
+
+OSX:
+
+    brew install libjpeg
+    brew install jhead
+    brew install netpbm
+
+Ubuntu:
+
+    apt-get install libjpeg
+    apt-get install jhead
+    apt-get install netpbm
+
+Windows:
+
+    You're on your own.
 
 ## Examples
 _(Coming soon)_
